@@ -626,6 +626,7 @@ RB_HEAD(uv_timer_tree_s, uv_timer_s);
   HANDLE dir_handle;                                                          \
   int req_pending;                                                            \
   uv_fs_event_cb cb;                                                          \
+  unsigned int win_flags;                                                     \
   WCHAR* filew;                                                               \
   WCHAR* short_filew;                                                         \
   WCHAR* dirw;                                                                \
