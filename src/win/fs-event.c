@@ -43,7 +43,7 @@ static void uv_fs_event_queue_readdirchanges(uv_loop_t* loop,
   if (!ReadDirectoryChangesW(handle->dir_handle,
                              handle->buffer,
                              uv_directory_watcher_buffer_size,
-                             (handle->win_flags & UV_FS_EVENT_RECURSIVE) ? TRUE: FALSE,
+                             (handle->fs_flags & UV_FS_EVENT_RECURSIVE) ? TRUE: FALSE,
                              FILE_NOTIFY_CHANGE_FILE_NAME      |
                                FILE_NOTIFY_CHANGE_DIR_NAME     |
                                FILE_NOTIFY_CHANGE_ATTRIBUTES   |
@@ -152,8 +152,7 @@ int uv_fs_event_start(uv_fs_event_t* handle,
     return UV_EINVAL;
 
   handle->cb = cb;
-  // Added win_flags for recursive watcher
-  handle->win_flags = flags;
+  handle->fs_flags = flags;
   handle->path = strdup(path);
   if (!handle->path) {
     uv_fatal_error(ERROR_OUTOFMEMORY, "malloc");
@@ -254,7 +253,7 @@ int uv_fs_event_start(uv_fs_event_t* handle,
   if (!ReadDirectoryChangesW(handle->dir_handle,
                              handle->buffer,
                              uv_directory_watcher_buffer_size,
-                             (handle->win_flags & UV_FS_EVENT_RECURSIVE) ? TRUE: FALSE,
+                             (handle->fs_flags & UV_FS_EVENT_RECURSIVE) ? TRUE: FALSE,
                              FILE_NOTIFY_CHANGE_FILE_NAME      |
                                FILE_NOTIFY_CHANGE_DIR_NAME     |
                                FILE_NOTIFY_CHANGE_ATTRIBUTES   |
